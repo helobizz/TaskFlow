@@ -1,15 +1,40 @@
-import {Text, View} from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { styles } from '../styles/styles';
+import { Image, Text, View, Pressable } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { styles } from "./styles";
 
-// Define e exporta a função principal da tela Home (padrão do Expo Router)
 export default function Home() {
+  function iniciarAplicacao() {
+    console.log("O botão foi pressionado!")
+  }
   return (
-    <SafeAreaView style={styles.safeArea}> {/* SafeAreaView garante que o conteúdo não fique escondido */}
-      <View style={styles.container}> {/* View funciona como um container (div) para agrupar e organizar os elementos */}
-        {/* Componente Text obrigatório no React Native para exibir textos */}
-        <Text style={styles.titulo}>TaskFlow</Text>
-        <Text style={styles.describe}>Organize sua tarefa de forma simples</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View style={styles.card}>
+          <Image
+            source={require("../assets/images/logo.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Text style={styles.titulo}>TaskFlow</Text>
+
+          <Text style={styles.descricao}>
+            Organize sua tarefas de forma simples
+          </Text>
+
+          <Pressable
+            onPress={iniciarAplicacao}
+            style={({ pressed }) => [
+              styles.botao,
+              pressed && styles.botaoPressionado,
+            ]}
+          >
+            {({ pressed }) => (
+              <Text style={styles.textoBotao}>
+                {pressed ? "Carregando..." : "Começar"}
+              </Text>
+            )}
+          </Pressable>
+        </View>
       </View>
     </SafeAreaView>
   );
