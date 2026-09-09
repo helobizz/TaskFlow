@@ -1,44 +1,54 @@
-import { Text, View, Button } from "react-native";
-import { useState, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Image, Pressable, Text, View } from 'react-native';
+import { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { styles } from './styles';
+import { router } from 'expo-router';
 
-export default function Contador() {
-    const [contador, setContador] = useState(0)
+export default function Home() {
     const [iniciado, setIniciado] = useState(false)
 
-    useEffect(() => {
-        console.log("O contador foi alterado para: ", contador)
-    }, [contador])
+    function iniciarAplicacao() {
+        setIniciado(true);
+        router.push("/tarefas"); // navega para tarefas a partir do router
+    }
+    return (
+        <SafeAreaView style={styles.safeArea}>
+            <View style={styles.container}>
+                <View style={styles.card}>
+                    <Image
+                        source={require("../assets/images/logo.png")}
+                        style={styles.logo}
+                        resizeMode='contain'
+                    />
+                    <Text style={styles.titulo}>TaskFlow</Text>
 
-    useEffect(() => {
-        setTimeout(() => {
-            setIniciado(true)
-        }, 3000) // tempo
-    }, [])
+                    {iniciado ? (
+                        <Text style={styles.descricao}>
+                            Bem vindo ao TaskFlow!
+                        </Text>
+                    ) : (
+                        <Text style={styles.descricao}>
+                            Organize sua tarefas de forma simples
+                        </Text>
+                    )}
 
-    return(
-        <SafeAreaView style={{flex:1}}>
-            <View style={{flex:1, justifyContent:'center', alignContent: 'center'}}>
-                {iniciado ? (
-                    <View>
-                            <Text style={{fontSize:30}}>CONTADOR</Text>
-                        <Text style={{fontSize:25}}>Valor contador {contador}</Text>
-                        <Button
-                            title="-"
-                            onPress={() => {setContador(contador-1)}}
-                        />
-                        <Button 
-                            title="+"
-                            onPress={() => {setContador(contador+1)}}
-                        />    
-                    </View>
-                ) : (
-                    <View style={{ flex:1, justifyContent: 'center', alignItems: 'center'}}>
-                        <Text>Carregando dados</Text>
-                    </View>
-                )}
+                        <Pressable
+                            onPress={iniciarAplicacao}
+                            style={({ pressed }) => [styles.botao,
+                            pressed && styles.botaoPressionado
+                            ]}
+                        >
+
+
+                            <Text style={styles.textoBotao}>
+                                {iniciado ? "Continuar" : "Começar"}
+                            </Text>
+
+
+                        </Pressable>
+                </View>
             </View>
-                
         </SafeAreaView>
-    )
+    );
 }
+
