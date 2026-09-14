@@ -3,12 +3,27 @@ import { styles } from "./styles";
 import { router } from "expo-router";
 
 export default function Tarefas() {
-    return(
+    function voltarInicio(){
+        router.dismissAll()
+        router.push("/")
+    }
+
+    return (
         <View style={styles.container}>
-            <Text style={styles.titulo}>Minhas tarefas</Text>
-            <Button 
+            <Text style={styles.titulo}>Minhas Tarefas</Text>
+            <Button
                 title="Voltar"
-                onPress={router.back} // posso voltar para a última acessada (a tela tarefas é excluída da pilha)
+                onPress={router.back}
+            />
+
+            <Button
+                title='Configurações'
+                onPress={() => router.push("./configuracoes")}
+            />
+
+            <Button
+                title='INICIO'
+                onPress={voltarInicio}
             />
         </View>
     )

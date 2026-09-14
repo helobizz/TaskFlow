@@ -1,4 +1,4 @@
-import { Image, Pressable, Text, View } from 'react-native';
+import { Image, Pressable, Text, View, Button } from 'react-native';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './styles';
@@ -9,7 +9,7 @@ export default function Home() {
 
     function iniciarAplicacao() {
         setIniciado(true);
-        router.push("/tarefas"); // navega para tarefas a partir do router
+        router.push("/tarefas");
     }
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -24,7 +24,7 @@ export default function Home() {
 
                     {iniciado ? (
                         <Text style={styles.descricao}>
-                            Bem vindo ao TaskFlow!
+                            Bem vindo as TaskFlow!
                         </Text>
                     ) : (
                         <Text style={styles.descricao}>
@@ -32,23 +32,33 @@ export default function Home() {
                         </Text>
                     )}
 
-                        <Pressable
-                            onPress={iniciarAplicacao}
-                            style={({ pressed }) => [styles.botao,
-                            pressed && styles.botaoPressionado
-                            ]}
-                        >
+
+                    
+                    <Pressable
+                        onPress={iniciarAplicacao}
+                        style={({ pressed }) => [styles.botao,
+                        pressed && styles.botaoPressionado
+                        ]}
+                    >
 
 
-                            <Text style={styles.textoBotao}>
-                                {iniciado ? "Continuar" : "Começar"}
-                            </Text>
+                        <Text style={styles.textoBotao}>
+                            {iniciado ? "Continuar" : "Começar"}
+                        </Text>
 
 
-                        </Pressable>
+                    </Pressable>
+                    <Button
+                        title='Configurações'
+                        onPress={()=>router.push("./configuracoes")}
+                    />
+                    <Button
+                        title='Tarefas'
+                        onPress={()=>router.push("/tarefas")}
+                    />
+
                 </View>
             </View>
         </SafeAreaView>
     );
 }
-
