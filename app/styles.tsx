@@ -15,17 +15,20 @@ export const styles = StyleSheet.create({
         fontSize: 34,
         fontWeight: "bold",
         color: '#2c61b6ff',
-        marginBottom: 10,
+        marginBottom: 10
     },
     descricao:{
         fontSize: 18,
         textAlign: "center",
         marginBottom: 20,
+        lineHeight: 26,
+        color: '#555'
     },
     logo:{
         width: 140,
-        height: 140
-    },
+        height: 140,
+        marginBottom: 20
+    }, 
     card:{
         backgroundColor: '#ffffff',
         padding: 30,
@@ -38,13 +41,5 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 40,
         borderRadius: 10
     },
-    textoBotao:{
-        color: '#FFFFFF',
-        fontWeight: 'bold',
-        fontSize: 18
-    },
-    botaoPressionado:{
-        backgroundColor: '#a6c0f7ff',
-        transform: [{ scale: 1.1 }]
-    }
+
 });

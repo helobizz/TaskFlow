@@ -1,8 +1,9 @@
-import { Image, Pressable, Text, View, Button } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { router } from 'expo-router';
+import Botao from '@/components/Botao';
 
 export default function Home() {
     const [iniciado, setIniciado] = useState(false)
@@ -33,29 +34,20 @@ export default function Home() {
                     )}
 
 
-                    
-                    <Pressable
-                        onPress={iniciarAplicacao}
-                        style={({ pressed }) => [styles.botao,
-                        pressed && styles.botaoPressionado
-                        ]}
-                    >
-
-
-                        <Text style={styles.textoBotao}>
-                            {iniciado ? "Continuar" : "Começar"}
-                        </Text>
-
-
-                    </Pressable>
-                    <Button
+                    {/* <Button
                         title='Configurações'
                         onPress={()=>router.push("./configuracoes")}
                     />
                     <Button
                         title='Tarefas'
                         onPress={()=>router.push("/tarefas")}
+                    /> */}
+
+                    <Botao 
+                        texto={iniciado ? "Continuar" : "Começar"}
+                        onPress={iniciarAplicacao}
                     />
+
 
                 </View>
             </View>
