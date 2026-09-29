@@ -111,7 +111,7 @@ export default function Tarefas() {
 
             <Botao
                 texto="Add +"
-                onPress={()=>router.push("/tarefas/addTarefas")}
+                onPress={()=>router.push("./tarefas/addTarefas")}
             />
         </View>
     )
