@@ -1,12 +1,17 @@
 import Botao from "@/components/Botao";
 import { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
+import { useRouter } from "expo-router";
+import { carregarTarefas, salvarTarefas } from "@/utils/armazenamento";
 
 export default function AddTarefas() {
+    const router = useRouter();
+
     const [titulo, setTitulo] = useState("")
     const [descricao, setDescricao] = useState("")
+    const [prioridade, setPrioridade] = useState("")
 
-    function salvar(){
+    async function salvar(){
         if (titulo.trim() === ""){
             Alert.alert("Atenção", "Digite o titulo da tarefa")
             return;
@@ -15,14 +20,29 @@ export default function AddTarefas() {
             Alert.alert("Atenção", "Digite a descrição da tarefa!")
             return;
         }
+        if (prioridade.trim() === ""){
+            setPrioridade("Baixa")
+        }
 
-        console.log("Validação ok, dados salvos com sucesso!")
-        setTitulo("")
-        setDescricao("")
+        const novaTarefa = { // cada nova tarefa vai ser composta pelos dados que vêm do input
+            id: Date.now().toString(), // o id vai ser a data atual convertida p string
+            titulo: titulo.trim(),
+            descricao: descricao.trim(),
+            prioridade: prioridade.trim(),
+        }
+
+        const tarefas = await carregarTarefas();
+
+        // ... -> espalha os elementos dos arrays, formando apenas um array
+        const novaLista = [...tarefas, novaTarefa];
+
+        await salvarTarefas(novaLista);
+
+        Alert.alert("Sucesso!", "Validação ok, dados salvos com sucesso!");
+        router.replace("/tarefas/tarefas") // elimina a pilha atual e substitui pela nova
     }
 
     return (
-        <View>
             <View style={styles.container}>
                 <Text style={styles.label}>Título *</Text>
                 <TextInput
@@ -39,6 +59,13 @@ export default function AddTarefas() {
                     placeholder="Digite a descricao da tarefa"
                     multiline
                 />
+                <Text style={styles.label}>Prioridade</Text>
+                <TextInput
+                    value={prioridade}
+                    style={styles.campo}
+                    onChangeText={(texto) => { setPrioridade(texto) }}
+                    placeholder="Digite a prioridade da tarefa"
+                />
 
                 <View style={{alignSelf: 'flex-end'}}>
                     <Botao
@@ -47,7 +74,6 @@ export default function AddTarefas() {
                     />
                 </View>
             </View>
-        </View>
     )
 }
 

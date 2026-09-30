@@ -1,64 +1,29 @@
 import Botao from "@/components/Botao";
 import TarefaCard from "@/components/TarefaCard";
 import { router } from "expo-router";
-import { FlatList, SectionList, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { styles } from "@/styles/global";
-import { Fonts } from "@/constants/theme";
+import { carregarTarefas } from "@/utils/armazenamento";
+import { useEffect, useState } from "react";
 
-const tarefas = [
-    {
-        id: "1",
-        titulo: "Estudar React Native",
-        concluida: false,
-        prioridade: "Alta"
-    },
-    {
-        id: "2",
-        titulo: "Entregar trabalho de Estatistica",
-        concluida: false,
-        prioridade: "Alta"
-    },
-    {
-        id: "3",
-        titulo: "Concluir curso das Academys",
-        concluida: true,
-        prioridade: "Media"
-    }
-
-]
-
-const tarefas2 = [
-    {
-        title: "Pendentes",
-        data: [
-            "Estudar react native",
-            "Entregar tarefa de PDM"
-        ]
-    },
-    {
-        title: "Concluidas",
-        data: [
-            "Entregar tarefa de Estatistica"
-        ]
-    }
-]
-
-const secoes = [
-    {
-        title: "Pendentes",
-        data: tarefas.filter(tarefa => !tarefa.concluida)
-    },
-    {
-        title: "Concluidas",
-        data: tarefas.filter(tarefa => tarefa.concluida)
-    }
-]
+// criando tipos para as tarefas
+type Tarefa = {
+    id: string;
+    titulo: string;
+    descricao: string;
+    prioridade: string;
+}
 
 export default function Tarefas() {
-    function voltarInicio() {
-        router.dismissAll()
-        router.push("/")
-    }
+    const [tarefas, setTarefas] = useState<Tarefa[]>([]); // coloca o tipo após o useState
+
+    useEffect(() => { // vai ser executado apenas na criação da tela
+        async function carregar() {
+            const dados = await carregarTarefas();
+            setTarefas(dados);
+        }
+        carregar();
+    }, []); // para executar apenas uma vez
 
     return (
         <View style={styles.container}>
@@ -69,18 +34,13 @@ export default function Tarefas() {
                 contentContainerStyle={{padding: 25}}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    !item.concluida ?
-                        (
                             <>
                                 <TarefaCard
                                     titulo={item.titulo}
-                                    descricao=""
+                                    descricao={item.descricao}
                                     prioridade={item.prioridade}
                                 />
-                                <Text>{item.concluida ? "Concluida" : "Pendente"}</Text>
                             </>
-                        ) : null
-
 
                 )}
 
@@ -90,28 +50,9 @@ export default function Tarefas() {
 
             />
 
-            <SectionList
-                sections={secoes}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                    <TarefaCard
-                        titulo={item.titulo}
-                        descricao=""
-                        prioridade={item.prioridade}
-                    />
-                )}
-
-                renderSectionHeader={({ section }) => (
-                    <Text style={{ fontSize: 30, fontWeight: 'bold' }}>
-                        {section.title}
-                    </Text>
-                )}
-
-            />
-
             <Botao
                 texto="Add +"
-                onPress={()=>router.push("./tarefas/addTarefas")}
+                onPress={()=>router.push("/tarefas/addTarefas")}
             />
         </View>
     )
