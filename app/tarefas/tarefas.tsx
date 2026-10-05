@@ -1,12 +1,12 @@
 import Botao from "@/components/Botao";
 import TarefaCard from "@/components/TarefaCard";
 import { router } from "expo-router";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, SectionList, Text, View } from "react-native";
 import { styles } from "@/styles/global";
 import { carregarTarefas } from "@/utils/armazenamento";
 import { useEffect, useState } from "react";
 
-// criando tipos para as tarefas
+// criando tipo para as tarefas
 type Tarefa = {
     id: string;
     titulo: string;
@@ -15,15 +15,17 @@ type Tarefa = {
 }
 
 export default function Tarefas() {
-    const [tarefas, setTarefas] = useState<Tarefa[]>([]); // coloca o tipo após o useState
 
-    useEffect(() => { // vai ser executado apenas na criação da tela
+    const [tarefas, setTarefas] = useState<Tarefa[]>([]) // coloca o tipo após o state
+
+    useEffect(()=>{ // vai ser executado apenas na criação da tela
         async function carregar() {
             const dados = await carregarTarefas();
             setTarefas(dados);
         }
         carregar();
     }, []); // para executar apenas uma vez
+
 
     return (
         <View style={styles.container}>
@@ -53,6 +55,10 @@ export default function Tarefas() {
             <Botao
                 texto="Add +"
                 onPress={()=>router.push("/tarefas/addTarefas")}
+            />
+            <Botao
+                texto="Configurações"
+                onPress={()=>router.push("/configuracoes")}
             />
         </View>
     )

@@ -6,7 +6,7 @@ export default function Layout(){
         <Stack>
             <Stack.Screen // edita o cabeçalho
             name="index"
-            options={{title: "Home"}}
+            options={{title: "TaskFlow"}}
             />
 
             <Stack.Screen 
