@@ -1,4 +1,4 @@
-import { Image, Pressable, Text, View, Button } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from '@/styles/global';
@@ -44,6 +44,11 @@ export default function Home() {
                     
 
                 </Card>
+                {/* tela de exercícios */}
+                <Botao 
+                    texto='Exercícios'
+                    onPress={() => router.push('/atividades/atividades')}
+                />
             </View>
         </SafeAreaView>
     );

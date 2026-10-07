@@ -1,7 +1,7 @@
 import Botao from "@/components/Botao";
 import TarefaCard from "@/components/TarefaCard";
 import { router } from "expo-router";
-import { FlatList, SectionList, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { styles } from "@/styles/global";
 import { carregarTarefas } from "@/utils/armazenamento";
 import { useEffect, useState } from "react";
